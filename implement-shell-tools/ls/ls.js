@@ -11,16 +11,15 @@ try {
     let files = readdirSync(targetDir);
 
     if (showAll) {
-        files = [".", "..", ...files];
+        files = files.filter(f => f !== "." && f != "..");
     } else {
         files = files.filter(f => !f.startsWith('.'));
     }
     files.sort((a, b) => a.localeCompare(b));
-    if (useVertical) {
-        files.forEach(file => console.log(file));
-    } else {
-        console.log(files.join(' '));
+    if (showAll) {
+        files = [".", "..", ...files];
     }
+    files.forEach(file => console.log(file))
 } catch (err) {
     console.error(`ls: cannot access '${targetDir}': No such file or directory`);
 }
